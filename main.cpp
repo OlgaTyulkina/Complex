@@ -9,7 +9,7 @@ int main()
 	Complex z(y);
 	cout << x << " " << y << " " << z << " Constructors" << endl;
 	z.set(5, 3);
-	cout << z << " set&&get " << endl;
+	cout << z.get() << " set&&get " << endl;
 	Complex d;
 	d = x + y;
 	cout << d << " operator + " << endl;
