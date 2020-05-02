@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Complex.h"
 
 
@@ -33,7 +34,10 @@ Complex Complex::get()
 //перегрузка операций
 Complex operator + (Complex& x, Complex& y)
 {
-	return Complex(x.re + y.re, x.im + y.im);
+	Complex temp;
+	temp.re = x.re + y.re;
+	temp.im = x.im + y.im;
+	return temp;
 }
 
 Complex operator - (Complex& x, Complex& y)
