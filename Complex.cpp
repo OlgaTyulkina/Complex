@@ -1,90 +1,86 @@
-#include <iostream>
 #include "Complex.h"
-
 
 Complex::Complex()
 {
-	re = 0;
-	im = 0;
+	Re = 0;
+	Im = 0;
 }
 
 Complex::Complex(double x, double y)
 {
-	re = x;
-	im = y;
+	Re = x;
+	Im = y;
 }
 
 Complex::Complex(Complex& A)
 {
-	re = A.re;
-	im = A.im;
+	Re = A.Re;
+	Im = A.Im;
 }
 
 void Complex::set(double x, double y)
 {
-	re = x;
-	im = y;
+	Re = x;
+	Im = y;
 }
 
 Complex Complex::get()
 {
-	Complex z(re, im);
+	Complex z(Re, Im);
 	return z;
 }
-//перегрузка операций
-Complex operator + (Complex& x, Complex& y)
+
+Complex operator + (Complex &x, Complex &y)
 {
-	Complex temp;
-	temp.re = x.re + y.re;
-	temp.im = x.im + y.im;
-	return temp;
+
+	return Complex(x.Re + y.Re, x.Im + y.Im);
 }
 
-Complex operator - (Complex& x, Complex& y)
+Complex operator * (Complex &x, Complex &y)
 {
 	Complex z;
-	z.re = x.re - y.re;
-	z.im = x.im - y.im;
+	z.Re = x.Re*y.Re - x.Im*y.Im;
+	z.Im = x.Re*y.Im + y.Re*x.Im;
 	return z;
 }
 
-Complex operator * (Complex& x, Complex& y)
+Complex operator - (Complex &x, Complex &y)
 {
 	Complex z;
-	z.re = x.re * y.re - x.im * y.im;
-	z.im = x.re * y.im + y.re * x.im;
+	z.Re = x.Re - y.Re;
+	z.Im = x.Im - y.Im;
 	return z;
 }
 
-Complex operator / (Complex& x, Complex& y)
+Complex operator / (Complex &x, Complex &y)
 {
 	Complex z;
-	z.re = (x.re * y.re + x.im * y.im) / (y.re * y.re + y.im * y.im);
-	z.im = (y.re * x.im - x.re * y.im) / (y.re * y.re + y.im * y.im);
+	z.Re = (x.Re*y.Re + x.Im*y.Im) / (y.Re*y.Re + y.Im*y.Im);
+	z.Im = (y.Re*x.Im - x.Re*y.Im) / (y.Re*y.Re + y.Im*y.Im);
 	return z;
 }
 
-Complex& Complex:: operator =(const Complex& x)
+Complex &Complex:: operator =(const Complex &x)
 {
-	re = x.re;
-	im = x.im;
+	Re = x.Re;
+	Im = x.Im;
 	return *this;
 }
 
-bool operator == (Complex& x, Complex& y)
+bool operator == (Complex &x, Complex &y)
 {
-	return ((x.re == y.re) && (x.im == y.im));
+	return ((x.Re == y.Re) && (x.Im == y.Im));
 }
 
-ostream& operator << (ostream& out, Complex& y)
+ostream& operator << (ostream &out, Complex &y)
 {
-	out << y.re << "+" << y.im << "i";
+	out << y.Re << "+" << y.Im << "i";
 	return out;
 }
 
-istream& operator >> (istream& in, Complex& y)
+istream& operator >> (istream &in, Complex &y)
 {
-	in >> y.re;
-	in >> y.im;
+	in >> y.Re;
+	in >> y.Im;
 	return in;
 }
