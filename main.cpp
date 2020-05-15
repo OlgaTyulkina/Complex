@@ -1,21 +1,22 @@
 #include "Complex.h"
 #include <iostream>
+
 using namespace std;
 
-int main() 
-{
+
+int main() {
 	Complex x;
-	Complex y(7, 6);
+	Complex y(3, 2);
 	Complex z(y);
 	cout << x << " " << y << " " << z << " Constructors" << endl;
-	z.set(5, 3);
+	z.set(6, 4);
 	cout << z.get() << " set&&get " << endl;
 	Complex d;
 	d = x + y;
 	cout << d << " operator + " << endl;
 	d = d - y;
 	cout << d << " operator - " << endl;
-	d = z * y;
+	d = z*y;
 	cout << d << " operator * " << endl;
 	d = z / y;
 	cout << " operator / " << d << endl;
