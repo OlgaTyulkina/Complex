@@ -10,16 +10,16 @@ public:
 	Complex(Complex& A);
 	void set(double x, double y);
 	Complex get();
-	friend Complex operator + (Complex& x, Complex& y);
-	friend Complex operator - (Complex& x, Complex& y);
-	friend Complex operator * (Complex& x, Complex& y);
-	friend Complex operator / (Complex& x, Complex& y);
-	Complex& operator = (const Complex& x);
-	friend bool operator == (Complex& x, Complex& y);
-	friend ostream& operator << (ostream& out, Complex& y);
-	friend istream& operator >> (istream& in, Complex& y);
+	friend  Complex operator + (Complex &x, Complex &y);
+	friend Complex operator * (Complex &x, Complex &y);
+	friend Complex operator - (Complex &x, Complex &y);
+	friend Complex operator / (Complex &x, Complex &y);
+	Complex& operator = (const Complex &x);
+	friend bool operator == (Complex &x, Complex &y);
+	friend ostream& operator << (ostream &out, Complex &y);
+	friend istream& operator >> (istream &in, Complex &y);
 
 private:
-	double re;
-	double im;
+	double Re;
+	double Im;
 };
