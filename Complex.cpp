@@ -1,86 +1,134 @@
 #include "Complex.h"
+#include <iostream>
+#include <math.h>
+using namespace std;
 
-Complex::Complex()
+Complex::Complex() {
+    re = 0.0;
+    im = 0.0;
+}
+Complex::Complex(const Complex& c) {
+    re = c.re;
+    im = c.im;
+}
+Complex::Complex(double _re, double _im) : re(_re), im(_im) { }
+Complex::Complex(double _re) {
+    re = _re;
+    im = 0.0;
+}
+Complex::~Complex() {
+    re = 0.0;
+    im = 0.0;
+}
+void Complex::outPut(const char* name)
 {
-	Re = 0;
-	Im = 0;
+    cout << name << ": re = " << re << ": im = " << im << endl;
+}
+Complex Complex::operator+(const Complex& c2)
+{
+    Complex tmp;
+    tmp.re = re + c2.re;
+    tmp.im = c2.im + im;
+    return tmp;
+}
+Complex Complex::operator-(const Complex& c2)
+{
+    Complex tmp;
+    tmp.re = re - c2.re;
+    tmp.im = im - c2.im;
+    return tmp;
+}
+Complex Complex::operator+(double d)
+{
+    Complex tmp;
+    tmp.re = re + d;
+    tmp.im = im;
+    return tmp;
+}
+Complex operator+(double d, const Complex& c2)
+{
+    Complex tmp;
+    tmp.re = d + c2.re;
+    tmp.im = c2.im;
+    return tmp;
+}
+Complex& Complex::operator=(const Complex& C)
+{
+    if (this != &C)
+    {
+        re = C.re;
+        im = C.im;
+    }
+    return *this;
+}
+bool Complex::operator==(const Complex& c2)
+{
+    return (re == c2.re && im == c2.im);
 }
 
-Complex::Complex(double x, double y)
+Complex Complex::operator++()
 {
-	Re = x;
-	Im = y;
+    re = re + 1.0;
+    im = im + 1.0;
+    return *this;
+}
+Complex Complex::operator++(int)
+{
+    Complex tmp(*this);
+    re = re + 1.0;
+    im = im + 1.0;
+    return tmp;
+}
+Complex Complex::operator/(const Complex& c) {
+    Complex res;
+    double tmp = c.re * c.re + c.im * c.im;
+    res.re = (re * c.re + im * c.im) / tmp;
+    res.im = (im * c.re - re * c.im) / tmp;
+    return res;
+}
+Complex Complex::operator*(const Complex& c) {
+    Complex res;
+    res.re = re * c.re - im * c.im;
+    res.im = re * c.im + im * c.re;
+    return res;
 }
 
-Complex::Complex(Complex& A)
+Complex Complex::operator-()
 {
-	Re = A.Re;
-	Im = A.Im;
+    return Complex(-re, -im);
 }
 
-void Complex::set(double x, double y)
-{
-	Re = x;
-	Im = y;
+Complex operator*(double d, const Complex& c) {
+    return Complex(d * c.re, d * c.im);
+}
+ostream& operator<<(ostream& stream, const Complex& c) {
+    stream << c.re << " " << c.im << endl;
+    return stream;
+}
+istream& operator>>(istream& stream, Complex& c) {
+    stream >> c.re >> c.im;
+    return stream;
 }
 
-Complex Complex::get()
+
+double Complex::module()
 {
-	Complex z(Re, Im);
-	return z;
+    return sqrt(im * im + re * re);
 }
 
-Complex operator + (Complex &x, Complex &y)
-{
 
-	return Complex(x.Re + y.Re, x.Im + y.Im);
+Complex Complex::exponen(int n)
+{
+    double fi = acos(re / (this->module()));
+    re = pow(this->module(), n) * cos(n * fi);
+    im = pow(this->module(), n) * sin(n * fi);
+    return *this;
 }
-
-Complex operator * (Complex &x, Complex &y)
+ 
+Complex Complex::exponent(double z)
 {
-	Complex z;
-	z.Re = x.Re*y.Re - x.Im*y.Im;
-	z.Im = x.Re*y.Im + y.Re*x.Im;
-	return z;
-}
-
-Complex operator - (Complex &x, Complex &y)
-{
-	Complex z;
-	z.Re = x.Re - y.Re;
-	z.Im = x.Im - y.Im;
-	return z;
-}
-
-Complex operator / (Complex &x, Complex &y)
-{
-	Complex z;
-	z.Re = (x.Re*y.Re + x.Im*y.Im) / (y.Re*y.Re + y.Im*y.Im);
-	z.Im = (y.Re*x.Im - x.Re*y.Im) / (y.Re*y.Re + y.Im*y.Im);
-	return z;
-}
-
-Complex &Complex:: operator =(const Complex &x)
-{
-	Re = x.Re;
-	Im = x.Im;
-	return *this;
-}
-
-bool operator == (Complex &x, Complex &y)
-{
-	return ((x.Re == y.Re) && (x.Im == y.Im));
-}
-
-ostream& operator << (ostream &out, Complex &y)
-{
-	out << y.Re << "+" << y.Im << "i";
-	return out;
-}
-
-istream& operator >> (istream &in, Complex &y)
-{
-	in >> y.Re;
-	in >> y.Im;
-	return in;
+    double fi = acos(re / (this->module()));
+    re = pow(this->module(), z) * cos(z * fi);
+    im = pow(this->module(), z) * sin(z * fi);
+    return *this;
 }
